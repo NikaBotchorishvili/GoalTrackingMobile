@@ -3,14 +3,23 @@ import { useState } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import Item from "./components/Item";
 import Input from "./components/Input";
+import uuid  from "react-native-uuid";
+export type Goal = {
+	id: string;
+	text: string
+}
 
 export default function App() {
-	const [goals, setGoals] = useState<string[]>([]);
-
+	const [goals, setGoals] = useState<Goal[]>([]);
 
 	const addGoal = (goal: string) => {
-		setGoals([...goals, goal]);
+		setGoals([...goals, { id: uuid.v4().toString(), text: goal}]);
 	};
+
+
+	const onDeleteItem = (id: string) => {
+		setGoals((goals) => goals.filter((goal) => goal.id !== id))
+	}
 	return (
 		<View style={styles.container}>
 			<View style={styles.addGoalContainer}>
@@ -23,8 +32,8 @@ export default function App() {
 			<View style={styles.goals}>
 				<FlatList
 					data={goals}
-					renderItem={({ item }) => <Item item={item} />}
-					keyExtractor={(item, index) => item + index}
+					renderItem={({ item }) => <Item onDeleteItem={onDeleteItem} item={item} />}
+					keyExtractor={(item) => item.id}
 					ItemSeparatorComponent={() => (
 						<View style={{ height: 10 }} />
 					)}

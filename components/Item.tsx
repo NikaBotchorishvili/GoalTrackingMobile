@@ -1,14 +1,18 @@
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View, Pressable } from "react-native"
+import { Goal } from "../App";
 
 type Props ={
-    item: string
+    item: Goal;
+    onDeleteItem: (id: string) => void;
 }
 
-const Item: React.FC<Props> = ({item}) => {
+const Item: React.FC<Props> = ({item, onDeleteItem}) => {
   return (
-    <View style={styles.item}>
-        <Text style={styles.itemText}>{item}</Text>
-    </View>
+    <Pressable onPress={onDeleteItem.bind(this, item.id)}>
+        <View style={styles.item}>
+            <Text style={styles.itemText}>{item.text}</Text>
+        </View>
+    </Pressable>
   )
 }
 
