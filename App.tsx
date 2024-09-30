@@ -1,38 +1,61 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import {
+	StyleSheet,
+	Text,
+	View,
+	FlatList,
+	Pressable,
+	Image
+} from "react-native";
 import Item from "./components/Item";
-import Input from "./components/Input";
-import uuid  from "react-native-uuid";
+import InputModal from "./components/Input";
+import uuid from "react-native-uuid";
+
 export type Goal = {
 	id: string;
-	text: string
-}
+	text: string;
+};
 
 export default function App() {
 	const [goals, setGoals] = useState<Goal[]>([]);
-
+	const [addGoalVisible, setAddGoalVisible] = useState<boolean>(false);
 	const addGoal = (goal: string) => {
-		setGoals([...goals, { id: uuid.v4().toString(), text: goal}]);
+		setGoals([...goals, { id: uuid.v4().toString(), text: goal }]);
 	};
 
-
 	const onDeleteItem = (id: string) => {
-		setGoals((goals) => goals.filter((goal) => goal.id !== id))
-	}
+		setGoals((goals) => goals.filter((goal) => goal.id !== id));
+	};
+
+	const openModal = () => {
+		setAddGoalVisible(true);
+	};
+	const closeModal = () => {
+		setAddGoalVisible(false);
+	};
 	return (
 		<View style={styles.container}>
-			<View style={styles.addGoalContainer}>
+			<Image style={{ width: 100, height: 100 }}	source={require("./assets/logo.png")} />
+
+			<Text style={styles.logoText}>Habit Tracker</Text>
+			<Pressable style={styles.addGoalButton} onPress={openModal}>
 				<Text style={styles.text}>Add Goal</Text>
-				<Input
-					addGoal={addGoal}
-					
-				/>
-			</View>
+			</Pressable>
+			<InputModal
+				addGoal={addGoal}
+				closeModal={closeModal}
+				modalVisible={addGoalVisible}
+			/>
 			<View style={styles.goals}>
 				<FlatList
 					data={goals}
-					renderItem={({ item }) => <Item onDeleteItem={onDeleteItem} item={item} />}
+					renderItem={({ item }) => (
+						<Item onDeleteItem={onDeleteItem} item={item} />
+					)}
+					ListEmptyComponent={
+						<Text style={styles.centerX}>No items in a list.</Text>
+					}
 					keyExtractor={(item) => item.id}
 					ItemSeparatorComponent={() => (
 						<View style={{ height: 10 }} />
@@ -45,10 +68,14 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+	logoText: {
+		fontSize: 40,
+	},
 	container: {
 		flex: 1,
-		paddingTop: 50,
+		paddingTop: 70,
 		alignItems: "center",
+		rowGap: 30,
 		width: "100%",
 	},
 	goals: {
@@ -58,12 +85,19 @@ const styles = StyleSheet.create({
 		flex: 4,
 		width: "80%",
 	},
-	addGoalContainer: {
-		flex: 1,
-		rowGap: 10,
-		width: "80%",
+	addGoalButton: {
+		backgroundColor: "#670e3c",
+		paddingHorizontal: 70,
+		paddingVertical: 15,
+		borderRadius: 5,
+		flexDirection: "row",
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	text: {
-		fontSize: 40,
+		color: "white",
+	},
+	centerX: {
+		textAlign: "center",
 	},
 });
