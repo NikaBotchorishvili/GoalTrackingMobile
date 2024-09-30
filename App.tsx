@@ -1,40 +1,34 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
+import Item from "./components/Item";
+import Input from "./components/Input";
 
 export default function App() {
-	const [goal, setGoal] = useState<string>("");
 	const [goals, setGoals] = useState<string[]>([]);
-	const goalInputHandler = (enteredText: string) => {
-		setGoal(enteredText);
-	};
 
-	const onAddGoal = () => {
+
+	const addGoal = (goal: string) => {
 		setGoals([...goals, goal]);
-		setGoal("")
-	}
-
-	const goalElements = goals.map((currGoal, index) => {
-		return <Text key={`${currGoal}-${index}`}>{currGoal}</Text>
-	})
+	};
 	return (
-		<View className="mt-20" style={styles.container}>
-			<View style={{ ...styles.item, ...{ rowGap: 10 } }}>
-				<Text style={styles.text} className="">
-					Add Goal
-				</Text>
-				<View style={styles.inputContainer}>
-					<TextInput
-						style={styles.input}
-						placeholder={"Meditating"}
-						onChangeText={goalInputHandler}
-						value={goal}
-					/>
-					<Button onPress={(e) => onAddGoal()} title="Submit" />
-				</View>
+		<View style={styles.container}>
+			<View style={styles.addGoalContainer}>
+				<Text style={styles.text}>Add Goal</Text>
+				<Input
+					addGoal={addGoal}
+					
+				/>
 			</View>
-			<View style={{ ...styles.item, ...styles.goals }}>
-				{goalElements}
+			<View style={styles.goals}>
+				<FlatList
+					data={goals}
+					renderItem={({ item }) => <Item item={item} />}
+					keyExtractor={(item, index) => item + index}
+					ItemSeparatorComponent={() => (
+						<View style={{ height: 10 }} />
+					)}
+				/>
 			</View>
 			<StatusBar style="auto" />
 		</View>
@@ -48,26 +42,17 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		width: "100%",
 	},
-	item: {
-		width: "80%",
-		paddingBottom: 20,
-	},
 	goals: {
-		flex: 1,
-		alignItems: "center",
+		borderTopColor: "#000",
+		borderTopWidth: 1,
+		paddingTop: 10,
+		flex: 4,
+		width: "80%",
 	},
-	inputContainer: {
-		flexDirection: "row",
-		width: "100%",
-		justifyContent: "space-between",
-		alignItems: "center",
-		columnGap: 10,
-	},
-	input: {
+	addGoalContainer: {
 		flex: 1,
-		borderColor: "#000",
-		borderWidth: 1,
-		padding: 10,
+		rowGap: 10,
+		width: "80%",
 	},
 	text: {
 		fontSize: 40,
