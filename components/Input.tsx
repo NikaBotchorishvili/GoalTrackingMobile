@@ -39,7 +39,7 @@ const Input: React.FC<Props> = ({ addGoal, modalVisible, closeModal }) => {
 					/>
 					<View style={styles.actions}>
 						<Pressable
-							style={styles.actionButton}
+							style={{ ...styles.actionButton, ...{ backgroundColor: "#e4446a" } }}
 							onPress={closeModal}
 						>
 							<Text style={styles.text}>Close</Text>
@@ -61,34 +61,31 @@ const Input: React.FC<Props> = ({ addGoal, modalVisible, closeModal }) => {
 export default Input;
 
 const styles = StyleSheet.create({
-	inputContainer: {
-		width: "100%",
-		flexDirection: "column",
-		justifyContent: "center",
-		height: "auto",
-		alignItems: "center",
-		rowGap: 20,
-	},
-	input: {
-		width: "100%",
-		borderColor: "#000",
-		borderWidth: 1,
-		padding: 10,
-	},
 	addGoalContainer: {
 		flex: 1,
-		rowGap: 10,
-		width: "80%",
-		marginTop: 100,
-		marginHorizontal: "auto",
+		backgroundColor: "#073B4C",
+		width: "100%",
+		justifyContent: "center",
+		alignItems: "center",
+		padding: 20,
 	},
 	headerText: {
 		fontSize: 40,
 		textAlign: "center",
-	},
-	text: {
 		color: "white",
-		textAlign: "center",
+		marginBottom: 20,
+	},
+	inputContainer: {
+		width: "80%",
+		rowGap: 20,
+	},
+	input: {
+
+		borderColor: "#000",
+		borderWidth: 1,
+		padding: 10,		
+		backgroundColor: "white",
+		borderRadius: 5,
 	},
 	actions: {
 		flexDirection: "row",
@@ -98,10 +95,14 @@ const styles = StyleSheet.create({
 	},
 	actionButton: {
 		flex: 1,
-		backgroundColor: "#670e3c",
-
+		backgroundColor: "#06D6A0",
 		paddingVertical: 10,
 		paddingHorizontal: 20,
+		
 		borderRadius: 8,
+	},
+	text: {
+		color: "white",
+		textAlign: "center",
 	},
 });

@@ -22,7 +22,7 @@ const Item: React.FC<Props> = ({ item, onDeleteItem }) => {
 
 const styles = StyleSheet.create({
 	item: {
-		backgroundColor: "#670e3c",
+		backgroundColor: "#118AB2",
 		width: "100%",
 		paddingHorizontal: 20,
 		paddingVertical: 10,

@@ -4,8 +4,9 @@
     "slug": "GoalTracking",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo.jpg",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
+    "backgroundColor": "#073B4C",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain"
@@ -15,8 +16,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.jpg",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/logo.png",
+        "backgroundColor": "#fff"
       }
     }
   }
